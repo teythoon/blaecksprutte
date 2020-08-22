@@ -1,5 +1,5 @@
 import argparse
-import cPickle
+import pickle
 import logging
 from notmuch import Database
 import os
@@ -51,7 +51,7 @@ def validate(log, progress=False):
     preds = clf.predict(Xt)
     real = binarizer.transform(y_test)
 
-    print classification_report(real, preds, target_names = binarizer.classes_)
+    print(classification_report(real, preds, target_names = binarizer.classes_))
 
 def train_from_bottom(log, progress=False):
     log.info("extract all mails from database")
@@ -80,7 +80,7 @@ def tag_new_mails(filename, log):
     if len(data) > 0:
         log.info("loading tagger")
         with open(filename, 'rb') as f:
-            v, b, c = cPickle.load(f)
+            v, b, c = pickle.load(f)
         log.info("predicting tags for new mails")
         X = v.transform(data)
         preds = c.predict(X)
@@ -123,8 +123,8 @@ def main():
     if args.command == 'train':
         v, b, c = train_from_bottom(log, args.progress)
         with open(filename, 'wb') as f:
-            cPickle.dump([v, b, c], f,
-                         cPickle.HIGHEST_PROTOCOL)
+            pickle.dump([v, b, c], f,
+                        pickle.HIGHEST_PROTOCOL)
 
     if args.command == 'tag':
         tag_new_mails(filename, log)

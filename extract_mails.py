@@ -25,17 +25,17 @@ def get_training_data(progress=False):
             n += 1
             pbar.update(n)
 
-	data.append(m.get_header('To'))
-	data.append(m.get_header('From'))
-	data.append(m.get_header('Subject'))
-	data.append(m.get_part(1).decode("utf8", errors="ignore"))
-	try:
-	    training_data.append('\n'.join(data))
-	except UnicodeDecodeError:
-	    print map(lambda x: type(x), data)
-	    sys.exit(1)
-	training_labels.append(erase_irrelevant_tags(list(m.get_tags())))
-	data = []
+        data.append(m.get_header('To'))
+        data.append(m.get_header('From'))
+        data.append(m.get_header('Subject'))
+        data.append(m.get_part(1).decode("utf8", errors="ignore"))
+        try:
+            training_data.append('\n'.join(data))
+        except UnicodeDecodeError:
+            print(map(lambda x: type(x), data))
+            sys.exit(1)
+        training_labels.append(erase_irrelevant_tags(list(m.get_tags())))
+        data = []
 
     if progress:
         pbar.finish()
@@ -49,15 +49,15 @@ def get_new_mails():
     m_data = []
     for m in query.search_messages():
         m_data.append(m.get_header('To'))
-	m_data.append(m.get_header('From'))
-	m_data.append(m.get_header('Subject'))
-	m_data.append(m.get_part(1).decode("utf8", errors="ignore"))
-	try:
-	    data.append('\n'.join(m_data))
+        m_data.append(m.get_header('From'))
+        m_data.append(m.get_header('Subject'))
+        m_data.append(m.get_part(1).decode("utf8", errors="ignore"))
+        try:
+            data.append('\n'.join(m_data))
             ids.append(m.get_message_id())
-	except UnicodeDecodeError:
-	    print map(lambda x: type(x), m_data)
-	    sys.exit(1)
+        except UnicodeDecodeError:
+            print(map(lambda x: type(x), m_data))
+            sys.exit(1)
         m_data = []
     return data, ids
 
