@@ -67,5 +67,5 @@ def write_tags(ids, tags):
         m = db.find_message(i)
         m.remove_tag("new")
         m.add_tag("inbox")
-        for t in ts:
+        for t in erase_irrelevant_tags(ts):
             m.add_tag(t)
