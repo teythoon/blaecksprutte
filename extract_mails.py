@@ -4,7 +4,7 @@ from progressbar import ProgressBar, Percentage, Bar, ETA
 
 def erase_irrelevant_tags(lst):
     irrelevant = {"attachment", "draft", "encrypted", "new", "signed", "unread",
-                  "inbox", "replied", "flagged"}
+                  "inbox", "replied", "flagged", "deleted"}
     return filter(lambda x: x not in irrelevant, lst)
 
 def get_training_data(progress=False):
